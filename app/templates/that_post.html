@@ -1,0 +1,61 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block navbar %}
+{% include 'navbar.html'%}
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+    <div class="card">
+
+        <div class="card-header text-center">
+            {% if post.user.profile_pic_path %}
+            <img src="{{ url_for('static', filename=post.user.profile_pic_path) }}" class="article-img" width="50px"
+                height="50px" style="border-radius: 50%;">
+            {% else %}
+            <img src="https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png"
+                class="article-img" width="50px" height="50px" style="border-radius: 50%;">
+            {% endif %}
+
+            <a class="mr-2"
+                href="{{ url_for('.user_post', username=post.user.username)}}">{{ post.user.username }}</a>&nbsp;&nbsp;
+            <small class="text-muted">{{ post.date_posted.strftime("%d-%m-%Y") }}</small>
+            {% if post.user == current_user %}
+            <div>
+                <a class="btn btn-success btn-sm m-1" href="{{ url_for('.update_post', post_id=post.id)}}">Update</a>
+                <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal"
+                    data-target="#deleteModal">Delete</button>
+                <a href="{{ url_for('.comment', post_id = post.id) }}" class="btn btn-primary"
+                    style="float: right;">Comment</a>
+            </div>
+            {% endif %}
+        </div>
+        <div class="card-body text-center">
+            <h3>{{ post.title }}</h3>
+            <p class=" article-content">{{ post.content }}</p>
+        </div>
+
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Are you sure you want to DELETE this post?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                <form action="{{ url_for('.delete_post', post_id=post.id)}}" method="POST"><br>
+                    <input class="btn btn-danger" type="submit" value="Delete">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

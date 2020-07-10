@@ -1,0 +1,36 @@
+{% macro display(posts) %}
+
+<div class="container text-center">
+    <button class="btn btn-danger" style="float: left;"><a>Subscribe</a></button>
+    {% if posts %}
+    {% for post in posts %}
+
+    <div class="media content-section">
+
+        <div class="article-metadata">
+            {% if post.user.profile_pic_path %}
+            <img src="{{ url_for('static', filename=post.user.profile_pic_path) }}" class="article-img" width="50px"
+                height="50px" style="border-radius: 50%;">
+            {% else %}
+            <img src="https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png"
+                class="article-img" width="50px" height="50px" style="border-radius: 50%;">
+            {% endif %}
+
+            <a class="mr-2"
+                href="{{ url_for('.user_post', username=post.user.username)}}">{{ post.user.username }}</a>&nbsp;&nbsp;
+            <small class="text-muted">{{ post.date_posted.strftime("%d %b %Y, %H:%M %p") }}</small>
+            <a href="{{ url_for('.comment', post_id = post.id) }}" class="btn btn-primary"
+                style="float: right;">Comment</a>
+        </div>
+        <h3><a href="{{ url_for('.post',post_id=post.id)}}">{{ post.title }}</a></h3>
+        <p class=" article-content">{{ post.content }}</p>
+
+
+    </div>
+
+
+    {% endfor %}
+    {% endif %}
+
+</div>
+{% endmacro %}

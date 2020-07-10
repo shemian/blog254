@@ -1,0 +1,40 @@
+{% extends 'bootstrap/base.html' %}
+{% block navbar %}
+{% include 'navbar.html'%}
+{% endblock %}
+
+{% block content %}
+
+<div class="container text-center">
+    <h1 class="mb-3">Posts by {{ user.username }} </h1>
+    {% if posts %}
+    {% for post in posts %}
+
+    <div class="card">
+
+        <div class="card-header text-center">
+            {% if post.user.profile_pic_path %}
+            <img src="{{ url_for('static', filename=post.user.profile_pic_path) }}" class="article-img" width="50px"
+                height="50px" style="border-radius: 50%;">
+            {% else %}
+            <img src="https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png"
+                class="article-img" width="50px" height="50px" style="border-radius: 50%;">
+            {% endif %}
+
+            <a class="mr-2"
+                href="{{ url_for('.user_post', username=post.user.username)}}">{{ post.user.username }}</a>&nbsp;&nbsp;
+            <small class="text-muted">{{ post.date_posted.strftime("%d-%m-%Y") }}</small>
+        </div>
+        <div class="card-body text-center">
+            <h3><a href="{{ url_for('.post',post_id=post.id)}}">{{ post.title }}</a></h3>
+            <p class=" article-content">{{ post.content }}</p>
+        </div>
+
+    </div>
+
+
+    {% endfor %}
+    {% endif %}
+
+</div>
+{% endblock %}

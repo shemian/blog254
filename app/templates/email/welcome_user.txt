@@ -1,0 +1,3 @@
+Hello {{user.username}}
+Welcome to My Blog
+I have just seen your sign up for my application and I want to welcome you to the fam. Enjoy the features i worked on and feel free to post and comment on the posts.

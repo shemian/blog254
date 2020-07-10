@@ -1,0 +1,31 @@
+{% extends 'bootstrap/base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css')}}">
+{% endblock %}
+{% block navbar %}
+{% include 'navbar.html'%}
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+    <div class="jumbotron">
+        <strong style="color: black;">Welcome to My Blog</strong>
+        {% if current_user.is_authenticated%}
+        <a id="start" class="btn btn-success animated infinite flash" href="{{url_for('main.home')}}">View Blog
+            Posts</a>
+        {% else %}
+        <a id="start" class="btn btn-success animated infinite flash" href="{{url_for('auth.login')}}">Sign
+            In</a>
+        {% endif %}
+        <div class="quotes">
+            <blockquote class="blockquote">
+                <h3> Quote of the day </h3>
+                <p>{{ quotes.quote}}</p>
+                <footer class="blockquote-footer">By: {{quotes.author}} </footer>
+            </blockquote>
+        </div>
+    </div>
+</div>
+{% endblock %}

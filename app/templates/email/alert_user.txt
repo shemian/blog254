@@ -1,0 +1,2 @@
+Hey {{user.username}}
+A new post has been created in My Blog, check it out!
